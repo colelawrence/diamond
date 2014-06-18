@@ -1,0 +1,32 @@
+head
+  title bear bits club
+  link(href="vendors/bootstrap-3.1.1/bootstrap.min.css", rel="stylesheet")
+  meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+  style.
+    .container { max-width: 750px }
+    .mono { font-family: "Courier New" }
+body
+  .container
+    .page-header.text-center
+      h1 bear bits club
+      //pre #! hacking/modding/inventing
+      sub.mono
+        a(href="about") About
+        span &nbsp; - &nbsp;
+        a(href="members") Members
+        span &nbsp; - &nbsp;
+        a(href="https://github.com/bear-bits-club") Github
+    block content
+
+  footer
+    //- script(src="vendors/jquery-2.1.1/jquery-2.1.1.min.js")
+      script(src="vendors/bootstrap-3.1.1/bootstrap.min.js")
+      script(src="vendors/jade-1.3.1/jade.min.js")
+      script.
+        // Utilities
+        $.fn.transferClass = function (className) {
+          this.siblings().removeClass(className)
+          this.addClass(className)
+          return this
+        }
+    block footer
