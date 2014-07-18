@@ -24,6 +24,10 @@ app.use(cookieParser())
 app.use(session({
     secret: 'such secretz'
 }))
+app.use(require('./lib/coffee-middleware')({
+    src: __dirname + '/static/coffee',
+    prefix: '/coffee'
+  }))
 app.use(express.static(path.join(__dirname, 'static')))
 
 app.use('/', simpleRoute)

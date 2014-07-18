@@ -1,6 +1,6 @@
-extends index
-
-block content
+body(style="max-width:900px;font-family:sans-serif;margin:8px auto")
+  div(style="text-align:center;")
+    a(href="index") index
   h1= message
-  h2= error.status
-  pre #{error.stack}
+  h2= error?error.status:void(0)
+  pre #{error?error.stack:void(0)}

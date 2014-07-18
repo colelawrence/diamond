@@ -1,5 +1,5 @@
 head
-  title bear bits club
+  title coffee express
   link(href="vendors/bootstrap-3.1.1/bootstrap.min.css", rel="stylesheet")
   meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
   style.
@@ -8,25 +8,18 @@ head
 body
   .container
     .page-header.text-center
-      h1 bear bits club
+      h1 coffee express
       //pre #! hacking/modding/inventing
       sub.mono
-        a(href="about") About
-        span &nbsp; - &nbsp;
-        a(href="members") Members
-        span &nbsp; - &nbsp;
-        a(href="https://github.com/bear-bits-club") Github
+        each page, index in views
+          - page = page.slice(0,-5)
+          if index !== 0
+            span &nbsp; - &nbsp;
+          a(href=page)=page
     block content
 
   footer
-    //- script(src="vendors/jquery-2.1.1/jquery-2.1.1.min.js")
+    //-
+      script(src="vendors/jquery-2.1.1/jquery-2.1.1.min.js")
       script(src="vendors/bootstrap-3.1.1/bootstrap.min.js")
-      script(src="vendors/jade-1.3.1/jade.min.js")
-      script.
-        // Utilities
-        $.fn.transferClass = function (className) {
-          this.siblings().removeClass(className)
-          this.addClass(className)
-          return this
-        }
     block footer
