@@ -5,4 +5,6 @@ block content
     a(href="index") index
   h1= message
   h2= error?error.status:void(0)
+  if error && error.message
+    h3=error.message
   pre(style="border:none; background:initial") #{error?error.stack:"No error stacktrace"}
