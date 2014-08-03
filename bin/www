@@ -1,6 +1,14 @@
 #!/usr/bin/env node
-var debug = require('debug')('RareWire-dashboard');
+var debug = require('debug')('n');
 var app = require('../app');
+var path = require('path');
+
+// Always retain correct directory where ever `www` is launched from 
+try {
+  process.chdir(path.resolve(__dirname + '../../'));
+} catch (err) {
+  console.log('chdir error: ' + err);
+}
 
 app.set('port', process.env.PORT || 3000);
 

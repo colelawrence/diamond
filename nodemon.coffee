@@ -6,7 +6,7 @@ p = require 'path'
 if devreload
   # Use devreload for reloading the browser
   try
-    devreload.listen {watch:[__dirname+'/views'], port:9999}
+    devreload.listen {watch:[__dirname+'/views', __dirname+'/static'], port:9999}
   catch e
     devreload = null
 start = ->

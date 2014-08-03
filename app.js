@@ -1,10 +1,6 @@
 require('coffee-script/register') // Needed to require modules written in coffee-script
-//GLOBAL.Parse = require('parse').Parse
-//Parse.initialize("iRYUBAI8aijyDunkp3tcVtZ4p16lbNKHmifnVhtN", "CN5hr9RnzaRBgO1xV9IdjMPb2LO94zm7WqzcyVrK")
 var express = require('express')
 var path = require('path')
-var favicon = require('static-favicon')
-var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var session = require('express-session')
@@ -16,10 +12,11 @@ var app = express()
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
-app.use(favicon())
-app.use(logger('dev'))
+
+// Form data access
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
+
 app.use(cookieParser())
 app.use(session({
     secret: 'such secretz'
@@ -27,9 +24,10 @@ app.use(session({
 app.use(require('./lib/coffee-middleware')({
     src: __dirname + '/static/coffee',
     prefix: '/coffee'
-  }))
+}))
 app.use(express.static(path.join(__dirname, 'static')))
 
+/// Routes
 app.use('/', simpleRoute)
 
 /// catch 404 and forward to error handler

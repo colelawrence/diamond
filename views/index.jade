@@ -1,25 +1,20 @@
-head
-  title coffee express
-  link(href="vendors/bootstrap-3.1.1/bootstrap.min.css", rel="stylesheet")
-  meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+extends layout
+
+block head
   style.
     .container { max-width: 750px }
     .mono { font-family: "Courier New" }
-body
+
+block content
   .container
     .page-header.text-center
-      h1 coffee express
+      h1 n
       //pre #! hacking/modding/inventing
-      sub.mono
-        each page, index in views
-          - page = page.slice(0,-5)
-          if index !== 0
-            span &nbsp; - &nbsp;
-          a(href=page)=page
-    block content
-
-  footer
-    //-
-      script(src="vendors/jquery-2.1.1/jquery-2.1.1.min.js")
-      script(src="vendors/bootstrap-3.1.1/bootstrap.min.js")
-    block footer
+      each page, index in views
+        - page = page.slice(0,-5)
+        if index !== 0
+          span &nbsp; - &nbsp;
+        a(href=page)=page
+block footer
+  script.
+    Log("Welcome to the index")
