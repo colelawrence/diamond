@@ -10,7 +10,7 @@ if devreload
   catch e
     devreload = null
 start = ->
-  ext = 'js'
+  ext = 'js coffee'
   watch = ['routes/','lib/','app.js']
   ndm {
     script: 'bin/www'
