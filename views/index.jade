@@ -15,7 +15,23 @@ block content
         if index !== 0
           span &nbsp; - &nbsp;
         a(href=page)=page
+    style.
+      .gh-code {
+        font-family: monospace;
+        background: #f7f7f7;
+        margin: 10px;
+        padding:16px;
+        overflow: auto;
+        white-space: pre;
+      }
+      .modal{overflow-y: auto;}
     #demo
+    .modal.fade#demo-fileview
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h4.modal-title
+          .modal-body.gh-code
 block footer
   script.
     log("Welcome to the index")
@@ -25,8 +41,12 @@ block footer
   script(src="/templates/files.js")
   script.
     demo = new Diamond("#demo", {restURL:"/diamond"})
+    demoModal = $("#demo-fileview")
+    demoModal.modal({show:false})
     demo.onOpenFile = function (path, data) {
       console.log("opened file: ", path)
       console.log("file contents: ", data)
-      alert(data)
+      demoModal.find(".modal-title").text(path)
+      demoModal.find(".modal-body").text(data)
+      demoModal.modal('show')
     }
