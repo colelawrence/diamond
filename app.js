@@ -5,8 +5,6 @@ var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 var session = require('express-session')
 
-var simpleRoute = require('./routes/')
-
 var app = express()
 
 // view engine setup
@@ -21,6 +19,10 @@ app.use(cookieParser())
 app.use(session({
     secret: 'such secretz'
 }))
+app.use(require('./lib/jade-browser-middleware').middleware({
+    src: __dirname + '/static/templates',
+    namespace: 'template'
+}))
 app.use(require('./lib/coffee-middleware')({
     src: __dirname + '/static/coffee',
     prefix: '/coffee'
@@ -28,7 +30,8 @@ app.use(require('./lib/coffee-middleware')({
 app.use(express.static(path.join(__dirname, 'static')))
 
 /// Routes
-app.use('/', simpleRoute)
+app.use('/rest', require('./routes/rest'))
+app.use('/', require('./routes/'))
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

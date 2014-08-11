@@ -15,6 +15,18 @@ block content
         if index !== 0
           span &nbsp; - &nbsp;
         a(href=page)=page
+    #demo
 block footer
   script.
     log("Welcome to the index")
+  script(src="/coffee/diamond.js")
+  script(src="/js/jade-runtime.js")
+  script template = {}
+  script(src="/templates/files.js")
+  script.
+    demo = new Diamond("#demo")
+    demo.onOpenFile = function (path, data) {
+      console.log("opened file: ", path)
+      console.log("file contents: ", data)
+      alert(data)
+    }

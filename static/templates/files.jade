@@ -1,0 +1,11 @@
+- var currentFolder = locals.currentPath.split("/"), folderPath = ""
+div
+  each folder, i in currentFolder
+    - folderPath += (i?"/":"") + folder
+    if i
+      !="&nbsp;/&nbsp;"
+    span.entry(data-path=folderPath)=folder
+.entry(data-path=locals.currentPath + "/../")
+  strong Parent Directory
+each file in locals.files
+  .entry(data-path=locals.currentPath + "/" + file)=file
