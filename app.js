@@ -30,7 +30,9 @@ app.use(require('./lib/coffee-middleware')({
 app.use(express.static(path.join(__dirname, 'static')))
 
 /// Routes
-app.use('/rest', require('./routes/rest'))
+app.use('/diamond', require('./lib/diamond')({
+    directory: __dirname
+}))
 app.use('/', require('./routes/'))
 
 /// catch 404 and forward to error handler

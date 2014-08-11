@@ -35,7 +35,7 @@ function normalizeArray(parts, allowAboveRoot) {
 
 class Diamond
   constructor: (selector, options = {}) ->
-    @restURL = options.restURL ? "/rest"
+    @restURL = options.restURL ? "./"
     @currentPath = options.currentPath ? "."
     if selector instanceof HTMLElement
       @display = $ selector

@@ -24,7 +24,7 @@ block footer
   script template = {}
   script(src="/templates/files.js")
   script.
-    demo = new Diamond("#demo")
+    demo = new Diamond("#demo", {restURL:"/diamond"})
     demo.onOpenFile = function (path, data) {
       console.log("opened file: ", path)
       console.log("file contents: ", data)

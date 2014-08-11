@@ -1,0 +1,2 @@
+coffee nodemon.coffee
+pause
