@@ -49,7 +49,7 @@ class Diamond
     f = "/"
     (path + f)
     .replace /\/\/+/g, f
-    .replace /^[\.\/]+/g, ""
+    .replace /^\.\//g, ""
     .slice(0, -1)
   _normalize: (path) ->
     normalizeArray(@_fixPath(path).split("/"), false).join("/")

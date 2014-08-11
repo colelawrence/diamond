@@ -12,6 +12,7 @@ class Diamond
     path = (req.query.path ? "/")
       .replace /\\+/g, "/"    # Be normal
       .replace /\.\.+/g, "."  # Be safe :-)
+      .replace /^\//, ""      # Be relative
     console.log "REST GET", { path }
     path = resolve directory, path
     fs.stat path, (error, stats) ->
