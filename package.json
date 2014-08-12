@@ -2,6 +2,10 @@
   "name": "diamond-middleware",
   "version": "0.0.1",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ZombieHippie/diamond"
+  },
   "scripts": {
     "test": "node ./test/bin/www",
     "develop": "coffee test/nodemon.coffee --all"
