@@ -8,13 +8,15 @@ class Diamond
     {
       @directoryHandler
       @directory
+      @debug
     } = options
   handle: (req, res, directory) ->
     path = (req.query.path ? "/")
       .replace /\\+/g, "/"    # Be normal
       .replace /\.\.+/g, "."  # Be safe :-)
       .replace /^\//, ""      # Be relative
-    console.log "REST GET", { path }
+    if @debug
+      console.log "REST GET", { path }
     path = resolve directory, path
     fs.stat path, (error, stats) ->
       try
@@ -45,9 +47,11 @@ class Diamond
     send = (script) ->
       res.setHeader 'Content-Type', 'text/javascript'
       res.end script
+    debug = @debug
     pluginCompiler restURL, (error, script) ->
       if error
-        console.error error
+        if debug
+          console.error error
         res.status 501
         res.json JSON.stringify(error).replace(/\\n|\\r/g, "\n").replace(/\n\n+/g, "\n")
       else
