@@ -35,12 +35,9 @@ block content
 block footer
   script.
     log("Welcome to the index")
-  script(src="/coffee/diamond.js")
-  script(src="/js/jade-runtime.js")
-  script template = {}
-  script(src="/templates/files.js")
+  script(src="/diamond/diamond.js")
   script.
-    demo = new Diamond("#demo", {restURL:"/diamond"})
+    demo = new Diamond("#demo")
     demoModal = $("#demo-fileview")
     demoModal.modal({show:false})
     demo.onOpenFile = function (path, data) {

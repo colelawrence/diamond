@@ -19,20 +19,14 @@ app.use(cookieParser())
 app.use(session({
     secret: 'such secretz'
 }))
-app.use(require('./lib/jade-browser-middleware').middleware({
-    src: __dirname + '/static/templates',
-    namespace: 'template'
-}))
-app.use(require('./lib/coffee-middleware')({
-    src: __dirname + '/static/coffee',
-    prefix: '/coffee'
-}))
-app.use(express.static(path.join(__dirname, 'static')))
 
-/// Routes
 app.use('/diamond', require('./lib/diamond')({
     directory: __dirname
 }))
+
+app.use(express.static(path.join(__dirname, 'static')))
+
+/// Routes
 app.use('/', require('./routes/'))
 
 /// catch 404 and forward to error handler

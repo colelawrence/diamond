@@ -31,11 +31,11 @@ function normalizeArray(parts, allowAboveRoot) {
 }
 `
 
-
+# globals: template, restURL
 
 class Diamond
   constructor: (selector, options = {}) ->
-    @restURL = options.restURL ? "./"
+    @restURL = restURL
     @currentPath = options.currentPath ? "."
     if selector instanceof HTMLElement
       @display = $ selector
