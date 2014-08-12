@@ -1,4 +1,3 @@
-require('coffee-script/register') // Needed to require modules written in coffee-script
 var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
@@ -20,7 +19,7 @@ app.use(session({
     secret: 'such secretz'
 }))
 
-app.use('/diamond', require('./lib/diamond')({
+app.use('/diamond', require('../')({
     directory: __dirname
 }))
 

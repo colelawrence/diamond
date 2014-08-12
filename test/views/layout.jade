@@ -1,0 +1,20 @@
+head
+  if title
+    title=title
+  if offline
+    link(href="/vendors/bootstrap-3.1.1/bootstrap.min.css", rel="stylesheet")
+  else
+    link(href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css", rel="stylesheet")
+  meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+  block head
+body
+  block content
+  footer
+    if offline
+      script(src="/vendors/jquery-2.1.1/jquery-2.1.1.min.js")
+      script(src="/vendors/bootstrap-3.1.1/bootstrap.min.js")
+      script(src="//localhost:9999/devreload.js")
+    else
+      script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+      script(src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/bootstrap.min.js")
+    block footer
