@@ -6,12 +6,12 @@ p = require 'path'
 if devreload
   # Use devreload for reloading the browser
   try
-    devreload.listen {watch:[__dirname+'/views', __dirname+'/static'], port:9999}
+    devreload.listen {watch:[__dirname+'/views', __dirname+'/static', p.normalize(__dirname+'/../src')], port:9999}
   catch e
     devreload = null
 start = ->
   ext = 'js coffee'
-  watch = ['routes/','lib/','app.js']
+  watch = ['routes/','lib/','app.js', p.normalize(__dirname+'/../lib')]
   ndm {
     script: 'bin/www'
     watch

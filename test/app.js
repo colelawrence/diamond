@@ -20,6 +20,7 @@ app.use(session({
 }))
 
 app.use('/diamond', require('../')({
+    debug: true,
     directory: __dirname
 }))
 

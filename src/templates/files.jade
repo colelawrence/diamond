@@ -1,4 +1,5 @@
 - var currentFolder = locals.currentPath.split("/"), folderPath = ""
+- console.log(locals.files)
 div
   each folder, i in currentFolder
     - folderPath += (i?"/":"") + folder
@@ -8,4 +9,4 @@ div
 .entry(data-path=locals.currentPath + "/../")
   strong Parent Directory
 each file in locals.files
-  .entry(data-path=locals.currentPath + "/" + file)=file
+  .entry(data-path=locals.currentPath + "/" + file.name)=file.name

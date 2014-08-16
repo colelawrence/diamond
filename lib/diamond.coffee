@@ -1,9 +1,10 @@
 require('coffee-script/register') # Needed to require modules written in coffee-script
-fs = require('fs')
-{ resolve, relative } = require('path')
-pluginCompiler = require './plugin-compiler'
 
 class Diamond
+  fs = require('fs')
+  { resolve, relative } = require('path')
+  pluginCompiler = require './plugin-compiler'
+  compiledScript = null
   constructor: (options) ->
     {
       @directoryHandler
@@ -23,7 +24,12 @@ class Diamond
         if stats.isFile()
           res.json { contents: fs.readFileSync path, "utf8" }
         else if stats.isDirectory()
-          res.json { files: fs.readdirSync path }
+          dir = fs.readdirSync path
+          files = []
+          for fileName in dir
+            {mtime, ctime, mode, size} = fs.lstatSync path + '/' + fileName
+            files.push {mtime, ctime, mode, size, name: fileName}
+          res.json { files }
         else
           res.json { contents: "" }
       catch error
@@ -48,14 +54,19 @@ class Diamond
       res.setHeader 'Content-Type', 'text/javascript'
       res.end script
     debug = @debug
-    pluginCompiler restURL, (error, script) ->
-      if error
-        if debug
-          console.error error
-        res.status 501
-        res.json JSON.stringify(error).replace(/\\n|\\r/g, "\n").replace(/\n\n+/g, "\n")
-      else
-        send script
+    if compiledScript
+      send compiledScript
+    else
+      pluginCompiler restURL, (error, script) ->
+        if error
+          if debug
+            console.error error
+          res.status 501
+          res.json JSON.stringify(error).replace(/\\n|\\r/g, "\n").replace(/\n\n+/g, "\n")
+        else
+          if not debug
+            compiledScript = script
+          send script
 module.exports = (options) ->
   diamond = (new Diamond(options))
   diamond.middleware.bind diamond
