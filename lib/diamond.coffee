@@ -27,8 +27,9 @@ class Diamond
           dir = fs.readdirSync path
           files = []
           for fileName in dir
-            {mtime, ctime, mode, size} = fs.lstatSync path + '/' + fileName
-            files.push {mtime, ctime, mode, size, name: fileName}
+            lstat = fs.lstatSync path + '/' + fileName
+            {mtime, ctime, size} = lstat
+            files.push {mtime, ctime, size, name: fileName, isFile: lstat.isFile(), isDirectory: lstat.isDirectory() }
           res.json { files }
         else
           res.json { contents: "" }

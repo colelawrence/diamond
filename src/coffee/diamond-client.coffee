@@ -34,6 +34,21 @@ class Diamond
     return parts;
   }
   `
+  sortByFolderAndName = (a, b) ->
+    if a.mode is b.mode
+      if a.name < b.name
+        return -1
+      else if a.name > b.name
+        return 1
+      else
+        return 0
+    else
+      if a.mode < b.mode
+        return -1
+      else if a.mode > b.mode
+        return 1
+      else
+        return 0
 
   # private
   fixPath = (path) ->
@@ -76,6 +91,7 @@ class Diamond
       self.currentPath = newPath
       if data.files?
         data.currentPath = newPath
+        data.files = data.files.sort sortByFolderAndName
         self.display.html template["files"](data)
       else
         self.onOpenFile?(newPath, data.contents)

@@ -8,5 +8,10 @@ div
     span.entry(data-path=folderPath)=folder
 .entry(data-path=locals.currentPath + "/../")
   strong Parent Directory
-each file in locals.files
-  .entry(data-path=locals.currentPath + "/" + file.name)=file.name
+table
+  tbody
+    each file in locals.files
+      tr.entry(data-path=locals.currentPath + "/" + file.name)
+        td(data-type=file.isFile?"file":"directory")
+        td.d-name=file.name
+        td(data-size=file.size)
