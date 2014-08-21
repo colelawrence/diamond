@@ -11,7 +11,7 @@ if devreload
     devreload = null
 start = ->
   ext = 'js coffee'
-  watch = ['routes/','lib/','app.js', p.normalize(__dirname+'/../lib')]
+  watch = [p.resolve(__dirname, '../lib/')]
   ndm {
     script: 'bin/www'
     watch

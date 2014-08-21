@@ -12,6 +12,7 @@ class Diamond
       @debug
     } = options
   handle: (req, res, directory) ->
+    action = (req.query.action ? false)
     path = (req.query.path ? "/")
       .replace /\\+/g, "/"    # Be normal
       .replace /\.\.+/g, "."  # Be safe :-)
@@ -19,23 +20,25 @@ class Diamond
     if @debug
       console.log "REST GET", { path }
     path = resolve directory, path
-    fs.stat path, (error, stats) ->
-      try
-        if stats.isFile()
-          res.json { contents: fs.readFileSync path, "utf8" }
-        else if stats.isDirectory()
-          dir = fs.readdirSync path
-          files = []
-          for fileName in dir
-            lstat = fs.lstatSync path + '/' + fileName
-            {mtime, ctime, size} = lstat
-            files.push {mtime, ctime, size, name: fileName, isFile: lstat.isFile(), isDirectory: lstat.isDirectory() }
-          res.json { files }
-        else
-          res.json { contents: "" }
-      catch error
-        res.status 501
-        res.end error.message
+    try
+      stats = fs.lstatSync path
+      if stats.isFile()
+        lstat = fs.lstatSync path
+        {mtime, ctime, size} = lstat
+        res.json { type: "file", file: (fs.readFileSync path, "utf8"), ext: path.match(/[^\\\/\.]*$/)[0], mtime, ctime, size }
+      else if stats.isDirectory()
+        dir = fs.readdirSync path
+        files = []
+        for fileName in dir
+          lstat = fs.lstatSync path + '/' + fileName
+          {mtime, ctime, size, mode} = lstat
+          files.push { mtime, ctime, mode, size, name: fileName, isFile: lstat.isFile(), isDirectory: lstat.isDirectory() }
+        res.json { type: "directory", directory: files }
+      else
+        res.json { type: "link" }
+    catch error
+      res.status 501
+      res.end error.message
   middleware: (req, res, next) ->
     self = @
     restURL = req.baseUrl

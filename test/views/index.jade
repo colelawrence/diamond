@@ -5,6 +5,19 @@ block head
     .container { max-width: 750px }
     .mono { font-family: "Courier New" }
 
+    /* Diamond styling */
+    td[data-type] {width:1em; border-right: solid transparent .5em }
+    td[data-type=directory] { background-color: tan }
+    td[data-type=file] { background-color: #f3f2f0 }
+    .gh-code {
+      font-family: monospace;
+      background: #f7f7f7;
+      margin: 10px;
+      padding:16px;
+      overflow: auto;
+      white-space: pre;
+    }
+    .modal{overflow-y: auto;}
 block content
   .container
     .page-header.text-center
@@ -15,16 +28,6 @@ block content
         if index !== 0
           span &nbsp; - &nbsp;
         a(href=page)=page
-    style.
-      .gh-code {
-        font-family: monospace;
-        background: #f7f7f7;
-        margin: 10px;
-        padding:16px;
-        overflow: auto;
-        white-space: pre;
-      }
-      .modal{overflow-y: auto;}
     #demo
     .modal.fade#demo-fileview
       .modal-dialog
@@ -35,7 +38,7 @@ block content
 block footer
   script(src="/diamond/diamond.js")
   script.
-    demo = new Diamond("#demo")
+    demo = new Diamond("#demo", {debug: true})
     demoModal = $("#demo-fileview")
     demoModal.modal({show:false})
     demo.onOpenFile = function (path, data) {

@@ -1,8 +1,9 @@
-# from node
 
 # globals: template, restURL
 
 class Diamond
+  openPath = (diamond, path) ->
+  # from node
   `// private
   // resolves . and .. elements in a path array with directory names there
   // must be no slashes, empty elements, or device names (c:\) in the array
@@ -69,17 +70,23 @@ class Diamond
     # For example: restURL = "/droppy" if app.use("/droppy", diamond)
     @restURL = restURL
     @currentPath = options.currentPath ? "."
+    @debug = !!options.debug
 
     # Use @display or self.display to refer to the Element we are bound to.
     @display = $ selector
 
     self = @
-    
+
     @display.on "click", ".entry", ->
       self.setPath this.dataset.path
 
     # initiallize
     @setPath @currentPath
+
+  # overwritable
+  onOpenDirectory: (path, files) ->
+    files = files.sort sortByFolderAndName
+    @display.html template["files"]({ currentPath: path, files})
 
   # public
   # Set the current path no higher than the original
@@ -88,12 +95,13 @@ class Diamond
     newPath = normalize(path)
     $.getJSON @restURL, { path: newPath }
     .done (data) ->
+      methods = self
       self.currentPath = newPath
-      if data.files?
-        data.currentPath = newPath
-        data.files = data.files.sort sortByFolderAndName
-        self.display.html template["files"](data)
-      else
-        self.onOpenFile?(newPath, data.contents)
+      if self.debug
+        console.log data
+      handler = "onOpen" + data.type[0].toUpperCase() + data.type.slice(1)
+      if self.debug
+        console.log "<diamond>", handler, newPath, data[data.type]
+      self[handler]?(newPath, data[data.type])
 
 this.Diamond = Diamond
